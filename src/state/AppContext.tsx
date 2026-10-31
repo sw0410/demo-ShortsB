@@ -187,7 +187,17 @@ export function AppProvider({
     return true;
   };
   const logout = () => {
-    update((s) => ({ ...s, demoAccountComplete: false, demoUserId: null }));
+    // Signed-out visitors start a fresh random trial from the first page,
+    // while the account's own reading positions stay in `progress`.
+    update((s) => ({
+      ...s,
+      demoAccountComplete: false,
+      demoUserId: null,
+      active: null,
+      finished: null,
+      intro: null,
+      guestContinue: false,
+    }));
     go("index", undefined, true);
   };
   const continueReading = useCallback(() => {
